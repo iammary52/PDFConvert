@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 변환기 - Word, HWP, PPT를 PDF로</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="#2563EB"/>
+                <path d="M8 6h12l6 6v14H8V6z" fill="white" opacity="0.9"/>
+                <path d="M20 6l6 6h-6V6z" fill="#1D4ED8"/>
+                <path d="M11 14h10M11 18h10M11 22h6" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>PDF 변환기</span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>문서를 PDF로 변환하세요</h1>
+            <p class="subtitle">Word, HWP, PowerPoint 파일을 빠르고 쉽게 PDF로 변환합니다</p>
+
+            <div class="supported-formats">
+                <div class="format-badge">
+                    <span class="format-icon word">W</span>
+                    <span>Word</span>
+                    <small>.doc / .docx</small>
+                </div>
+                <div class="format-badge">
+                    <span class="format-icon hwp">H</span>
+                    <span>한글</span>
+                    <small>.hwp / .hwpx</small>
+                </div>
+                <div class="format-badge">
+                    <span class="format-icon ppt">P</span>
+                    <span>PowerPoint</span>
+                    <small>.ppt / .pptx</small>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content" id="dropContent">
+                        <div class="upload-icon">
+                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                                <circle cx="28" cy="28" r="28" fill="#EFF6FF"/>
+                                <path d="M28 16v16M22 22l6-6 6 6" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18 38h20" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>파일을 여기에 끌어다 놓으세요</h3>
+                        <p>또는</p>
+                        <label class="btn btn-primary" for="fileInput">파일 선택</label>
+                        <input type="file" id="fileInput" accept=".doc,.docx,.hwp,.hwpx,.ppt,.pptx" multiple hidden>
+                        <p class="file-hint">지원 형식: Word(.doc/.docx), 한글(.hwp/.hwpx), PowerPoint(.ppt/.pptx)<br>최대 파일 크기: 50MB</p>
+                    </div>
+                </div>
+
+                <!-- File Queue -->
+                <div class="file-queue" id="fileQueue" style="display:none;">
+                    <h3 class="queue-title">변환 목록</h3>
+                    <div id="fileList"></div>
+                    <div class="queue-actions">
+                        <button class="btn btn-outline" id="clearBtn">목록 지우기</button>
+                        <button class="btn btn-primary btn-large" id="convertBtn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10h12M12 6l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            PDF로 변환하기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section" id="progressSection" style="display:none;">
+                    <div id="progressList"></div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display:none;">
+                    <div class="results-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#10B981"/>
+                            <path d="M8 12l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>변환 완료!</h3>
+                    </div>
+                    <div id="resultsList"></div>
+                    <button class="btn btn-outline" id="resetBtn">새 파일 변환하기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>왜 우리 PDF 변환기를 사용하나요?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" fill="#DBEAFE"/>
+                            <path d="M10 16l4 4 8-8" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>HWP 완벽 지원</h3>
+                    <p>한글 문서(.hwp, .hwpx)를 PDF로 완벽하게 변환합니다. 레이아웃과 폰트가 그대로 유지됩니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" fill="#DBEAFE"/>
+                            <path d="M8 16l4-6 4 4 4-2" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>고품질 변환</h3>
+                    <p>원본 문서의 레이아웃, 이미지, 폰트를 완벽하게 보존하여 고품질 PDF를 생성합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" fill="#DBEAFE"/>
+                            <path d="M16 8v8l4 4" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>빠른 변환 속도</h3>
+                    <p>클라우드 기반 변환 엔진을 사용하여 대용량 파일도 빠르게 변환됩니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" fill="#DBEAFE"/>
+                            <path d="M12 8h8v2l2 2v8l-2 2h-8l-2-2v-8l2-2V8z" stroke="#2563EB" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M12 12h8" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>보안 처리</h3>
+                    <p>업로드된 파일은 변환 즉시 삭제됩니다. 개인정보와 문서 내용은 안전하게 보호됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-to">
+        <div class="container">
+            <h2>사용 방법</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>파일 선택</h3>
+                    <p>변환할 Word, HWP, PPT 파일을 선택하거나 드래그 앤 드롭하세요</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>변환 시작</h3>
+                    <p>"PDF로 변환하기" 버튼을 클릭하면 자동으로 변환이 시작됩니다</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>다운로드</h3>
+                    <p>변환이 완료되면 PDF 파일을 바로 다운로드 받으세요</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 PDF 변환기. All rights reserved.</p>
+        <p class="footer-note">업로드된 파일은 변환 완료 후 즉시 삭제됩니다.</p>
+    </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
