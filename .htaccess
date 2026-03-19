@@ -1,0 +1,61 @@
+# PDF 변환기 - Apache 설정 (CAFE24 호환)
+
+# PHP 설정 오버라이드 (CAFE24에서 허용되는 경우)
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 55M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+</IfModule>
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 55M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+</IfModule>
+
+# 보안: 민감한 파일 접근 차단
+<FilesMatch "^(config\.php|composer\.json|composer\.lock|\.env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# uploads/ 및 converted/ 폴더의 PHP 실행 차단
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # uploads/ 직접 접근 차단
+    RewriteRule ^uploads/.*$ - [F,L]
+    RewriteRule ^converted/.*$ - [F,L]
+</IfModule>
+
+# 디렉토리 목록 비활성화
+Options -Indexes
+
+# 기본 보안 헤더
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 정적 파일 캐싱 (CSS, JS, 이미지)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 week"
+</IfModule>
+
+# Gzip 압축
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# 문자 인코딩
+AddDefaultCharset UTF-8

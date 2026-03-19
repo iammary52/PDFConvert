@@ -1,0 +1,15 @@
+# uploads 폴더 - 보안 설정
+# 이 폴더의 모든 파일 실행 및 직접 접근 차단
+
+Options -Indexes -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .php5 .phtml .pl .py .jsp .asp .htm .html .shtml .sh .cgi
+
+# 모든 접근 차단
+Order Allow,Deny
+Deny from all
+
+# PHP 실행 비활성화
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
